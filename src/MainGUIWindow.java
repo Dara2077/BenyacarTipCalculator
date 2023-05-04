@@ -30,32 +30,40 @@ public class MainGUIWindow extends JFrame implements ActionListener, KeyListener
         Object source = e.getSource();
         if (source instanceof JButton){
             JButton button = (JButton) source;
-            String text = button.getText().substring(0, (button.getText().length() - 1));
-            String name = button.getName();
-            if (name.equals("JButtonIncreaseTip") || name.equals("JButtonDecreaseTip")){
-                if (text.equals("+")){
-                    JTextFieldTip.setText(Double.parseDouble(text) + 5 + "");
+            String text = JTextFieldTip.getText().substring(0, (JTextFieldTip.getText().length() - 1));
+            if (button.equals(JButtonIncreaseTip) || button.equals(JButtonDecreaseTip)){
+                if (button.getText().equals("+")){
+                    JTextFieldTip.setText((int)(Double.parseDouble(text) + 5.0) + "%");
                 }
                 else{
-                    JTextFieldTip.setText(Double.parseDouble(text) - 5 + "");
+                    if (Double.parseDouble(text) - 5.0 < 0){
+                        JTextFieldTip.setText(0 + "%");
+                    }
+                    else{
+                        JTextFieldTip.setText((int)(Double.parseDouble(text) - 5.0) + "%");
+                    }
                 }
             }
             else{
-                if (!JTextFieldNumPeople.equals("1")){
-                    if (text.equals("+")){
-                        JTextFieldNumPeople.setText(Double.parseDouble(text) + 1 + "");
+                    if (button.getText().equals("+")){
+                        JTextFieldNumPeople.setText((int)Double.parseDouble(JTextFieldNumPeople.getText()) + 1 + "");
                     }
                     else{
-                        JTextFieldNumPeople.setText(Double.parseDouble(text) - 1 + "");
+                        if (!(JTextFieldNumPeople.getText()).equals("1")){
+                        JTextFieldNumPeople.setText((int)Double.parseDouble(JTextFieldNumPeople.getText()) - 1 + "");
                     }
                 }
             }
 
         }
-    };
+        updateValues();
+    }
+
 
     @Override
-    public void keyTyped(KeyEvent e){};
+    public void keyTyped(KeyEvent e){
+        updateValues();
+    };
 
     @Override
     public void keyPressed(KeyEvent e){};
